@@ -1,20 +1,12 @@
 package edu.uob;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Paths;
 import java.nio.file.Files;
-import java.io.FileReader;
-import java.io.*;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ScheduledExecutorService;
 
 
 /**
@@ -27,6 +19,7 @@ public class DBServer {
 
     public static void main(String args[]) throws IOException {
         DBServer server = new DBServer();
+        loadDate();
         server.blockingListenOn(8888);
     }
 
@@ -51,6 +44,12 @@ public class DBServer {
      */
     public String handleCommand(String command) {
         // TODO implement your server logic here
+        return "";
+    }
+
+
+    //  === Methods below is helper ===
+    public static void loadDate() {
         String filePath = ""; // TODO: use File.separator
         List<People> people = null;
         List<Shed> sheds = null;
@@ -82,29 +81,9 @@ public class DBServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return "";
     }
 
-
-    //  === Methods below is helper ===
-//    public List<?> readTab(String filePath, Class<?> cls) throws IOException {
-//
-//
-//        if (cls == People.class) {
-//            List<People> people = People.readFromTabFile(filePath);
-//            return people;
-//        } else if (cls == Shed.class) {
-//            List<Shed> sheds = Shed.readFromTabFile(filePath);
-//            return sheds;
-//        } else {
-//            System.out.println("Invalid class type: " + cls.getName());
-//            return null;
-//        }
-//    }
-
-    public List<People> randomAge(List<People> people) {
+    public static List<People> randomAge(List<People> people) {
         for (People p :
                 people) {
             Random rand = new Random();
@@ -114,13 +93,13 @@ public class DBServer {
         return people;
     }
 
-    public <T> void printList(List<T> list) {
+    public static <T> void printList(List<T> list) {
         for (T obj : list) {
             System.out.println(obj.toString());
         }
     }
 
-    public void writeTabFile(String filePath, List<People> list) throws IOException {
+    public static void writeTabFile(String filePath, List<People> list) throws IOException {
         File file = new File(filePath);
 
         try (PrintWriter writer = new PrintWriter(file)) {
